@@ -19,32 +19,19 @@ import { verifyCommissionCron } from "./automation/verifyCommissionCron.js";
 
 const app = express();
 
-/* ---------------- CORS FIX ---------------- */
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://quick-hammer-three.vercel.app"
-];
+/* ---------------- CORS (FINAL FIX) ---------------- */
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Blocked by CORS"));
-      }
-    },
+    origin: [
+      "http://localhost:5173",
+      "https://quick-hammer-three.vercel.app"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-// preflight support
-app.options("*", cors());
 
 /* ---------------- MIDDLEWARES ---------------- */
 
